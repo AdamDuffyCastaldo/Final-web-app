@@ -1,0 +1,143 @@
+{% extends "base.html" %} 
+{% block stylesheet %}
+<link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename=stylesheet) }}"
+/>
+{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="header">
+      <header>Create an account</header>
+    </div>
+    <div class="Stages">
+      <form method="POST" id="Nameandpass"  onkeydown="if(event.keyCode === 13) { 
+        alert( 
+'You have pressed Enter key, use submit button instead');  
+        return false;  }">
+        <div id="Names" class="Stage1">
+          <h2>Personal Information</h2>
+          <div class="field firstname-field">
+            <div class="input-field">
+              <input
+                type="text"
+                name="firstname"
+                id="firstname"
+                placeholder="Enter your Firstname"
+                class="firstname"
+              />
+            </div>
+            <span class="error firstname">
+              <i class="bx bx-error-circle error-icon"></i>
+              <p class="error-text">Please enter a valid Firstname</p>
+            </span>
+          </div>
+
+          <div class="field LastName">
+            <div class="input-field">
+              <input
+                type="text"
+                name="Lastname"
+                id="Lastname"
+                placeholder="Enter your Lastname"
+                class="Lastname-input"
+              />
+            </div>
+            <span class="error lastname">
+              <i class="bx bx-error-circle error-icon"></i>
+              <p class="error-text">Please enter a valid Lastname</p>
+            </span>
+          </div>
+          <!-- <div id="EnterNames" class="input-field button">
+            <input type="submit" value="Submit" />
+          </div> -->
+
+        </div>
+
+        <div id="pass" class="Stage2">
+        
+          <div class="field createPasskey">
+            <div class="input-field">
+              <input
+                type="password"
+                name="Passkey"
+                id="Passkey"
+                placeholder="Enter your Passkey"
+                class="inputpasskey"
+              />
+              <i class="bx bx-hide show-PassKey"></i>
+            </div>
+            <span class="error PassKey">
+              <i class="bx bx-error-circle error-icon"></i>
+              <p class="error-text">
+                Please enter valid password (must have at least 7 letters, a
+                number, a special character, one upper, and one lower case
+                character)
+              </p>
+            </span>
+          </div>
+
+          <div class="field ConfirmPassKey">
+            <div class="input-field">
+              <input
+                type="password"
+                name="cPasskey"
+                id="cPasskey"
+                placeholder="Confirm your Passkey"
+                class="Confirminput"
+              />
+              <i class="bx bx-hide show-PassKey"></i>
+            </div>
+            <span  class="error PassKey">
+              <i class="bx bx-error-circle error-icon"></i>
+              <p class="error-text">The Passkeys don't match</p>
+            </span>
+          </div>
+          <!-- <div class="input-field button">
+            <input type="submit" value="Submit" />
+          </div> -->
+        </div>
+       
+        <div id="Camera" class="Stage3 hidden">
+          <h2>Take Photo for Recognition</h2>
+          <div class="container3">
+            <video autoplay="true" id="videoElement"></video>
+            <div class="camerabuttons">
+              <button id="startcamera">Start Camera</button>
+              <button id="takephoto">Take Photo</button>
+            </div>
+          </div>
+          <div class="canvas">
+            <canvas id="canvaselement" style="display: none"></canvas>
+            <img id="photoelement" style="display: none" />
+          </div>
+        </div>
+
+
+        <div id="Confirm" class="Stage4 hidden">
+          <div class="field confirmfield">
+            <h2>Submit account details</h2>
+            <p>Are you sure you would like to submit?</p>
+            <div class="input-field">
+              <div id="EnterNames" class="input-field button">
+                <input type="submit" id="Submitform" value="Submit" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="movementbuttons">
+        <button class="prev" disabled>Previous</button>
+        <button class="Next">Next</button>
+        </div>
+      </div>
+      </form>
+      <script src="static/signup.js"></script>
+    </div>
+  </div>
+{% endblock %}
