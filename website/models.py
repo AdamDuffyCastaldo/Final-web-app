@@ -26,8 +26,8 @@ class Users(Base, UserMixin):
     firstName = Column(String(150))
     lastName = Column(String(150))
     password = Column(String(150))
-    face_image = relationship("FaceReference", back_populates="user", uselist=False)
-    notes = relationship("Note", backref="users", lazy="dynamic")
+    face_image = relationship("FaceReference", uselist=False)
+    notes = relationship("Note", backref="user", lazy="dynamic")
 
     def __repr__(self):
         return f'User: {self.firstName} {self.lastName}'
@@ -40,8 +40,8 @@ class FaceReference(Base):
 
     photo_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.user_id"))
-    user = relationship("Users", back_populates="face_image")
     image = Column(LargeBinary, nullable=False)
+    user = relationship("Users", back_populates="face_image")
 
     def __repr__(self):
         return f'FaceReference: {self.photo_id}'

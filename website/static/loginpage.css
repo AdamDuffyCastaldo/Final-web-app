@@ -1,16 +1,16 @@
-/* General Styles */
+/* General Styles
 .container {
     position: relative;
     top: 40%;
     transform: translate(0, -50%) ;
     padding: 5px;
     margin: 5px;
-    
 
-}
+} */
 
 
-html, body {
+html,
+body {
     margin: 0px;
     height: 100%;
 }
@@ -60,21 +60,26 @@ html, body {
   
   p {
     margin-block: 1.5rem;
+    color: black;
   }
   
   /* Container Styles */
   .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5%;
+    height: 90%;
     margin: 10px;
   }
   
   /* Grid Styles */
   .grid {
     display: grid;
-    place-items: center;
-    inline-size: 90%;
-    margin-inline: auto;
-    max-inline-size: 20rem;
-  }
+    
+    gap: 20px; /* Add some gap between elements */
+}
   
   /* Utility Classes */
   .hidden {
@@ -129,6 +134,7 @@ html, body {
   
   .form {
     display: grid;
+    justify-content: center;
     gap: var(--formGap);
   }
   
@@ -140,12 +146,18 @@ html, body {
   
   .form__field {
     display: flex;
+    justify-content: center;
+    inline-size: 100%;
   }
   
   .form__input {
     flex: 1;
+    max-width: 350px;
+    padding: 8px;
+    border-radius: 5px;
   }
   
+
   /* Login Styles */
   :root {
     --loginBorderRadius: 0.25rem;
@@ -210,3 +222,75 @@ html, body {
   .login input[type="submit"]:hover {
     background-color: var(--loginSubmitHoverBackgroundColor);
   }
+
+
+.CameraInput {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 20px; /* Add margin to separate camera from login form */
+}
+
+.cameracontainer .camerabuttons{
+    display: flex;
+    flex-direction: row;
+    margin: 0 15%;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+video {
+    background-color: #666;
+    width: 70%;
+    margin: 2% 15%;
+}
+
+.camerabuttons button {
+  display: inline-block;
+  outline: 0;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0px 16px;
+  border-radius: 2px;
+  min-width: 80px;
+  height: 32px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(50, 49, 48);
+  font-size: 14px;
+  font-weight: 400;
+  box-sizing: border-box;
+  border: 1px solid rgb(138, 136, 134);
+}
+
+.camerabuttons button:hover {
+  background-color: rgb(243, 242, 241);
+  color: rgb(32, 31, 30);
+}
+
+#photoelement {
+  display: grid;
+  width: 100%; /* Make the photoelement same width as its container */
+  height: auto; /* Maintain aspect ratio */
+  margin-top: 10px; /* Add some space between canvas and photoelement */
+}
+.canvas {
+    width: 70%;
+    position: relative;
+    margin: 2% 15%;
+    height: auto;
+    margin: 0 auto;
+}
+
+img {
+  width: 90%;
+  border: 1px solid black;
+}
+
+#formting123 {
+  align-content: center;
+}
+h2 {
+  text-align: center;
+}

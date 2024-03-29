@@ -10,7 +10,7 @@ import base64
 
 auth = Blueprint("auth", __name__)
 
-engine = create_engine("sqlite:///database21.db")
+engine = create_engine("sqlite:///database22.db")
 
 Session = sessionmaker(bind=engine)
 
@@ -19,8 +19,15 @@ def login():
     if request.method == "POST":
         firstname = request.form.get("firstname")
         lastname = request.form.get("Lastname")
+        image_data  = None
+        if "image" in request.files:
+            image = request.files["image"]
+            if image:
+                image_data = image.read()
+        
         session = Session()
         user = session.query(Users).filter_by(firstName=firstname, lastName=lastname).first()
+
         if user:
             flash("Logged in successfully!", category="success")
             login_user(user, remember=True)
@@ -49,17 +56,16 @@ def signup():
         image_data = None
         session = Session()
         user = session.query(Users).filter_by(firstName=firstName, lastName=lastName).first()
-        session.close()
+        print(user)
+
+        if user:
+            flash("User already exists", category="error")
+            return redirect(url_for("auth.login"))
        
         if "image" in request.files:
             image = request.files["image"]
             if image:
                 image_data = image.read()
-
-
-        if user:
-            flash("User already exists", category="error")
-
 
         if len(firstName) < 2:
             flash("Firstname must be greater than 1 character", category="error")
@@ -70,14 +76,15 @@ def signup():
         elif password != Cpassword:
             flash("Passwords don't match", category="error")
         else:
-            session = Session()
             new_user = Users(firstName = firstName, lastName = lastName, password=generate_password_hash(password, method="pbkdf2:sha256"))
-            new_face = FaceReference(user_id = new_user.user_id, image = image_data)
+
             session.add(new_user)
+            session.commit()
+            new_face = FaceReference(user_id = new_user.user_id, image = image_data)
             session.add(new_face)
             session.commit()
             flash("Account Created!", category="success")
             return redirect(url_for("blue.home"))
-            session.close()
+        session.close()
 
     return render_template("signup.html", user=current_user ,stylesheet = "signuppage.css")

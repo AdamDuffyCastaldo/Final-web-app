@@ -6,7 +6,7 @@ from flask_login import LoginManager
 
 
 
-DB_NAME = "database21.db"
+DB_NAME = "database22.db"
 
 def create_app():
     app = Flask(__name__)
@@ -15,7 +15,7 @@ def create_app():
 
     engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True)
     Base.metadata.create_all(engine)
-    from .models import Users
+    from .models import Users, Note, FaceReference
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -26,8 +26,6 @@ def create_app():
         session = Session()
         return session.query(Users).get(int(id))
     
-    
-
 
     from .blue import blue
     from .auth import auth

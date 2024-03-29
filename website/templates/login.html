@@ -1,12 +1,7 @@
-{% extends "base.html" %} 
-{% block stylesheet %}
+{% extends "base.html" %} {% block stylesheet %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename=stylesheet) }}" />
-{% endblock %} 
-
-{% block title %}Login{% endblock %} 
-
-{% block main %}
+{% endblock %} {% block title %}Login{% endblock %} {% block main %}
 <div class="grid">
   <form method="POST" action="" class="form login" id="formting123">
     <div class="form__field">
@@ -44,17 +39,30 @@
       />
     </div>
 
+    <p class="text--center">
+      Not a member? <a href="/signup">Sign up now</a>
+      <svg class="icon">
+        <use xlink:href="#icon-arrow-right"></use>
+      </svg>
+    </p>
+    <div class="CameraInput">
+      <h2>Take Photo for Recognition</h2>
+      <div class="cameracontainer">
+        <video autoplay="true" id="videoElement"></video>
+        <div class="camerabuttons">
+          <button id="startcamera">Start Camera</button>
+          <button id="takephoto">Take Photo</button>
+        </div>
+      </div>
+      <div class="canvas">
+        <canvas id="canvaselement" style="display: none"></canvas>
+        <img id="photoelement" style="display: none" />
+      </div>
+    </div>
     <div class="form__field">
-      <input type="submit" value="Sign In" />
+      <input id="login_submit"type="submit" value="Sign In" />
     </div>
   </form>
-
-  <p class="text--center">
-    Not a member? <a href="/signup">Sign up now</a>
-    <svg class="icon">
-      <use xlink:href="#icon-arrow-right"></use>
-    </svg>
-  </p>
 </div>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="icons">
@@ -74,4 +82,5 @@
     />
   </symbol>
 </svg>
+<script src="{{ url_for('static', filename='login.js') }}"></script>
 {% endblock %}
