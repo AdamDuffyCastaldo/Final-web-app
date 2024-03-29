@@ -30,7 +30,7 @@ class Users(Base, UserMixin):
     notes = relationship("Note", backref="user", lazy="dynamic")
 
     def __repr__(self):
-        return f'User: {self.firstName} {self.lastName}'
+        return f'User: {self.user_id} {self.firstName} {self.lastName} {self.password}'
     
     def get_id(self):
         return str(self.user_id)

@@ -5,7 +5,8 @@ from .models import Users, FaceReference, Note
 from werkzeug.security import generate_password_hash, check_password_hash
 from PIL import Image
 from flask_login import login_user, login_required, logout_user, current_user
-
+from sqlalchemy import text
+from sqlalchemy import select
 import base64
 
 auth = Blueprint("auth", __name__)
@@ -18,17 +19,29 @@ Session = sessionmaker(bind=engine)
 def login():
     if request.method == "POST":
         firstname = request.form.get("firstname")
-        lastname = request.form.get("Lastname")
-        image_data  = None
+        print(firstname)
+        lastname = request.form.get("lastname")
+        print(lastname)
+        print(f"Firstname: {firstname}, Lastname: {lastname}")
+
+        image_data = None
         if "image" in request.files:
             image = request.files["image"]
             if image:
                 image_data = image.read()
-        
+        #print(image_data)
         session = Session()
         user = session.query(Users).filter_by(firstName=firstname, lastName=lastname).first()
-
         if user:
+            user_id = user.user_id
+            print(user_id)
+            face_image = session.query(FaceReference).filter_by(user_id=user_id).first()
+
+
+            
+            if face_image:
+                user_image_data = face_image.image
+                print(user_image_data)
             flash("Logged in successfully!", category="success")
             login_user(user, remember=True)
             return redirect(url_for("blue.home"))
