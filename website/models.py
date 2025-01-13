@@ -45,3 +45,17 @@ class FaceReference(Base):
 
     def __repr__(self):
         return f'FaceReference: {self.photo_id}'
+    
+class Files(Base):
+    __tablename__ = "Files"
+
+    FileId = Column(Integer, primary_key=True)
+    userId = Column(Integer, ForeignKey("users.user_id"))
+    FileContent = Column(LargeBinary)
+    user = relationship("Users")
+    FileName = Column(String(200))
+    Extension = Column(String(10))
+    DateCreated = Column(DateTime(timezone=True), default=func.now())
+
+    def __repr__(self):
+        return f'File: {self.FileId}'

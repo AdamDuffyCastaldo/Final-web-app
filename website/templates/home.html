@@ -1,18 +1,85 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% extends "base.html" %} {% block stylesheet %}
 
-{% block main %} 
-<h1>Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
-    {% for note in user.notes %}
-    <li class="list-group-item">{{ note.note_text }}
-        <button type="button" class="close" onClick="deleteNote('{{note.note_id}}')"><span aria-hidden="true">&times;</span></button>
-    </li>
-    {% endfor %}
-</ul>
-<form method="POST">
-    <textarea name="note" id="note" class="form-control"></textarea>
-    <div"> 
+<link rel="stylesheet" href="{{ url_for('static', filename=stylesheet) }}" />
+{% endblock %} {% block title %}Home{% endblock %} {% block main %}
+<div class="homecontainer">
+  <div class="subcontainer notes">
+    <h1>Notes</h1>
+    <ul class="list-group list-group-flush" id="notes">
+      {% for note in user.notes %}
+      <li class="list-group-item">
+        {{ note.note_text }}
+        <button
+          type="button"
+          class="close"
+          onClick="deleteNote('{{note.note_id}}')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <form method="POST">
+      <textarea name="note" id="note" class="form-control"></textarea>
+      <div>
         <button type="submit" class="btn btn-primary">Add note</button>
+      </div>
+    </form>
+  </div>
+  <div class="subcontainer files">
+    <h1>Files</h1>
+    <div>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" />
+        <button type="submit" class="btn btn-secondary btn-lg btn-block">
+          Upload
+        </button>
+      </form>
+      <h2>Images</h2>
+      <div class="images-section">
+        {% for file in image_files %}
+        <div class="image-container">
+          <a href="{{ url_for('blue.produce_file', filename = file) }}" target="_blank">
+            <img src="{{ url_for('blue.produce_file', filename = file) }}" alt="" />
+          </a>
+          <form action="{{ url_for('blue.delete_file', filename=file) }}" method="POST">
+            <button type="submit" class="close">Delete</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+      <h2>PDFs</h2>
+      <div class="pdfs">
+        {% for file in pdf_files %}
+        <div class="pdfimage">
+          <a href="{{ url_for('blue.produce_file', filename = file)}}" target="_blank">
+            <img src="{{ url_for('static', filename='pdfplaceholder.png') }}" alt="" />
+          </a>
+          <form action="{{ url_for('blue.delete_file', filename=file) }}" method="POST">
+            <button type="submit" class="close">Delete</button>
+          </form>
+          <p>{{file}}</p>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-</form>
+  </div>
+</div>
+<script>
+    var inactivityTimeout;
+
+    function resetInactivityTimeout() {
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(function(){
+            window.location.href = '/signout';
+            flash("You have been signed out due to inactivity", category = "success"); 
+        }, 60000); 
+    }
+
+    document.addEventListener("mousemove", resetInactivityTimeout);
+    document.addEventListener("keydown", resetInactivityTimeout);
+
+
+    resetInactivityTimeout();
+</script>
 {% endblock %}

@@ -3,15 +3,19 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from .models import Base
 from flask_login import LoginManager
+import os
 
 
-
-DB_NAME = "database22.db"
+DB_NAME = "ProjectDatabaseFinal.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
+    app.secret_key = 'hjshjhdjah kjshkjdhjs'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config["MAX_CONTENT_LENGTH"] = 16*1024*1024
+    app.config["ALLOWED_EXTENSIONS"] = [".jpg", ".jpeg", ".png", ".gif", ".pdf"]
+    app.config["UPLOAD_DIRECTORY"] = os.path.join(os.path.dirname(__file__), '..', 'uploads')
+
 
     engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True)
     Base.metadata.create_all(engine)
